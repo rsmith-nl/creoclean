@@ -4,13 +4,14 @@
 #
 # Author: R.F. Smith <rsmith@xs4all.nl>
 # Created: 2015-05-07 18:29:17 +0200
-# Last modified: 2015-05-07 21:15:18 +0200
+# Last modified: 2015-05-10 10:59:06 +0200
 #
 # To the extent possible under law, R.F. Smith has waived all copyright and
 # related or neighboring rights to cadclean.py. This work is published
 # from the Netherlands. See http://creativecommons.org/publicdomain/zero/1.0/
 
-"""Cleans up Creo versioned files in the current working directory."""
+"""Cleans up Creo versioned files in the current working directory.  Removes
+all versions except the last one, and renamed that to version 1."""
 
 import argparse
 import logging
@@ -18,7 +19,7 @@ import os
 import re
 import sys
 
-__version__ = '0.1.0'
+__version__ = '0.2.0'
 
 
 def main(argv):
@@ -40,7 +41,7 @@ def main(argv):
     lfmt = '%(levelname)s: %(message)s'
     if args.dry_run:
         logging.basicConfig(level='INFO', format=lfmt)
-        logging.info('DRY RUN, no files will be deleted')
+        logging.info('DRY RUN, no files will be deleted or renamed')
     else:
         logging.basicConfig(level=getattr(logging, args.log.upper(), None),
                             format=lfmt)
@@ -64,10 +65,15 @@ def main(argv):
                 numbers.sort()
                 for n in numbers[:-1]:
                     fn = "{}.{}.{}".format(nm, ext, n)
-                    logging.info("removing {}".format(fn))
+                    logging.info("removing '{}'".format(fn))
                     if not args.dry_run:
                         os.remove(fn)
-            logging.info("(leaving {}.{}.{})".format(nm, ext, numbers[-1]))
+            oldfn = "{}.{}.{}".format(nm, ext, numbers[-1])
+            newfn = "{}.{}.{}".format(nm, ext, 1)
+            if oldfn != newfn:
+                logging.info("renaming '{}' to '{}'".format(oldfn, newfn))
+                if not args.dry_run:
+                    os.rename(oldfn, newfn)
 
 
 if __name__ == '__main__':
