@@ -4,7 +4,7 @@
 #
 # Copyright © 2015 R.F. Smith <rsmith@xs4all.nl>. All rights reserved.
 # Created: 2015-05-07 18:29:17 +0200
-# Last modified: 2015-05-10 13:49:25 +0200
+# Last modified: 2015-05-30 00:05:57 +0200
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -36,7 +36,7 @@ import os
 import re
 import sys
 
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 
 
 def main(argv):
@@ -84,6 +84,7 @@ def cleandir(path, dry_run):
     splits = [re.split('^(.*)\.([^\.]{3})\.([0-9]+)$', fn) for fn in filenames]
     splits = [s[1:-1] for s in splits if len(s) == 5]
     exts = sorted(set([s[1] for s in splits]))
+    os.chdir(path)
     for ext in exts:
         data = [s for s in splits if s[1] == ext]
         cnt = len(data)
@@ -101,13 +102,21 @@ def cleandir(path, dry_run):
                     fn = "{}.{}.{}".format(nm, ext, n)
                     logging.info("removing '{}'".format(fn))
                     if not dry_run:
-                        os.remove(fn)
+                        try:
+                            os.remove(fn)
+                        except OSError as e:
+                            es = "removing '{}' failed: {}"
+                            logging.warning(es.format(fn, e))
             oldfn = "{}.{}.{}".format(nm, ext, numbers[-1])
             newfn = "{}.{}.{}".format(nm, ext, 1)
             if oldfn != newfn:
                 logging.info("renaming '{}' to '{}'".format(oldfn, newfn))
                 if not dry_run:
-                    os.rename(oldfn, newfn)
+                    try:
+                        os.rename(oldfn, newfn)
+                    except OSError as e:
+                        es = "renaming '{}' failed: {}"
+                        logging.warning(es.format(oldfn, e))
 
 
 if __name__ == '__main__':
