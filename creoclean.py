@@ -4,7 +4,7 @@
 #
 # Copyright © 2015 R.F. Smith <rsmith@xs4all.nl>. All rights reserved.
 # Created: 2015-05-07 18:29:17 +0200
-# Last modified: 2015-05-30 00:05:57 +0200
+# Last modified: 2017-06-04 15:16:39 +0200
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -25,10 +25,12 @@
 # LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 # EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+"""
+Cleans up Creo versioned files.
 
-"""Cleans up Creo versioned files in the named diratories or in the current
-working directory.  Removes all versions except the last one, and renames that
-to version 1."""
+Works in the named diratories or in the current working directory.
+Removes all versions except the last one, and renames that to version 1.
+"""
 
 import argparse
 import logging
@@ -72,7 +74,8 @@ def main(argv):
 
 
 def cleandir(path, dry_run):
-    """Clean up Creo files in the named directory
+    """
+    Clean up Creo files in the named directory.
 
     Arguments:
         path: The path of the directory to clean.
