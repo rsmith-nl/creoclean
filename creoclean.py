@@ -4,7 +4,7 @@
 #
 # Copyright © 2015 R.F. Smith <rsmith@xs4all.nl>. All rights reserved.
 # Created: 2015-05-07 18:29:17 +0200
-# Last modified: 2017-06-04 15:16:39 +0200
+# Last modified: 2017-11-11 19:50:41 +0100
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -38,7 +38,7 @@ import os
 import re
 import sys
 
-__version__ = '0.3.1'
+__version__ = '1.0'
 
 
 def main(argv):
