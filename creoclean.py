@@ -1,10 +1,10 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # vim:fileencoding=utf-8:ft=python
 # file: creoclean.py
 #
 # Copyright © 2015 R.F. Smith <rsmith@xs4all.nl>. All rights reserved.
 # Created: 2015-05-07 18:29:17 +0200
-# Last modified: 2017-11-11 19:50:41 +0100
+# Last modified: 2020-08-31T12:36:02+0200
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -33,12 +33,13 @@ Removes all versions except the last one, and renames that to version 1.
 """
 
 import argparse
+import glob
 import logging
 import os
 import re
 import sys
 
-__version__ = '1.0'
+__version__ = '1.1'
 
 
 def main(argv):
@@ -71,13 +72,15 @@ def main(argv):
     if not args.dirs:
         args.dirs = ['.']
     for directory in [d for d in args.dirs if os.path.isdir(d)]:
-        logging.info("cleaning in '{}'".format(directory))
-        cleandir(directory, args.dry_run)
+        logging.info("cleaning up versioned files in '{}'".format(directory))
+        clean_versioned(directory, args.dry_run)
+        logging.info("cleaning up miscellaneous files in '{}'".format(directory))
+        clean_miscellaneous(directory, args.dry_run)
 
 
-def cleandir(path, dry_run):
+def clean_versioned(path, dry_run):  # noqa
     """
-    Clean up Creo files in the named directory.
+    Clean up Creo versioned files in the named directory.
 
     Arguments:
         path: The path of the directory to clean.
@@ -121,6 +124,34 @@ def cleandir(path, dry_run):
                     except OSError as e:
                         es = "renaming '{}' failed: {}"
                         logging.warning(es.format(oldfn, e))
+
+
+def clean_miscellaneous(path, dry_run):
+    """
+    Clean up Creo log files in the named directory.
+
+    Arguments:
+        path: The path of the directory to clean.
+        dry_run: Boolean to indicate a dry run.
+    """
+    os.chdir(path)
+    log = glob.glob("*.log*")
+    logging.info("{} log files found.".format(len(log)))
+    xml = glob.glob("*.xml.*")
+    logging.info("{} xml files found.".format(len(xml)))
+    inf = glob.glob("*.inf.*")
+    logging.info("{} inf files found.".format(len(inf)))
+    txt = glob.glob("*.txt.*")
+    logging.info("{} txt files found.".format(len(txt)))
+    files = log + xml + inf + txt
+    for fn in files:
+        logging.info("removing '{}'".format(fn))
+        if not dry_run:
+            try:
+                os.remove(fn)
+            except OSError as e:
+                es = "removing '{}' failed: {}"
+                logging.warning(es.format(fn, e))
 
 
 if __name__ == '__main__':
