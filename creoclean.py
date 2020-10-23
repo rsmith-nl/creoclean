@@ -50,27 +50,31 @@ def main(argv):
         argv: command line arguments
     """
     dr = "dry run; show what would be done but don't delete files"
-    opts = argparse.ArgumentParser(prog='creoclean', description=__doc__)
-    opts.add_argument('-d', dest='dry_run', action="store_true", help=dr)
-    opts.add_argument('-v', '--version', action='version', version=__version__)
+    opts = argparse.ArgumentParser(prog="creoclean", description=__doc__)
+    opts.add_argument("-d", dest="dry_run", action="store_true", help=dr)
+    opts.add_argument("-v", "--version", action="version", version=__version__)
     opts.add_argument(
-        '--log',
-        default='warning',
-        choices=['debug', 'info', 'warning', 'error'],
-        help="logging level (defaults to 'warning')"
+        "--log",
+        default="warning",
+        choices=["debug", "info", "warning", "error"],
+        help="logging level (defaults to 'warning')",
     )
     opts.add_argument(
-        "dirs", metavar='dir', nargs='*', default=[], help="one or more directories to process"
+        "dirs",
+        metavar="dir",
+        nargs="*",
+        default=[],
+        help="one or more directories to process",
     )
     args = opts.parse_args(argv)
-    lfmt = '%(levelname)s: %(message)s'
+    lfmt = "%(levelname)s: %(message)s"
     if args.dry_run:
-        logging.basicConfig(level='INFO', format=lfmt)
-        logging.info('DRY RUN, no files will be deleted or renamed')
+        logging.basicConfig(level="INFO", format=lfmt)
+        logging.info("DRY RUN, no files will be deleted or renamed")
     else:
         logging.basicConfig(level=getattr(logging, args.log.upper(), None), format=lfmt)
     if not args.dirs:
-        args.dirs = ['.']
+        args.dirs = ["."]
     for directory in [d for d in args.dirs if os.path.isdir(d)]:
         logging.info("cleaning up versioned files in '{}'".format(directory))
         clean_versioned(directory, args.dry_run)
@@ -87,8 +91,8 @@ def clean_versioned(path, dry_run):  # noqa
         dry_run: Boolean to indicate a dry run.
     """
     filenames = [e for e in os.listdir(path) if os.path.isfile(os.path.join(path, e))]
-    logging.info('found {} files'.format(len(filenames)))
-    splits = [re.split('^(.*)\.([^\.]{3})\.([0-9]+)$', fn) for fn in filenames]
+    logging.info("found {} files".format(len(filenames)))
+    splits = [re.split("^(.*)\.([^\.]{3})\.([0-9]+)$", fn) for fn in filenames]
     splits = [s[1:-1] for s in splits if len(s) == 5]
     exts = sorted(set([s[1] for s in splits]))
     os.chdir(path)
@@ -154,5 +158,5 @@ def clean_miscellaneous(path, dry_run):
                 logging.warning(es.format(fn, e))
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main(sys.argv[1:])
