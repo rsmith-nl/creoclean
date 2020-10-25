@@ -4,7 +4,7 @@
 #
 # Copyright © 2020 R.F. Smith <rsmith@xs4all.nl>
 # Created: 2020-10-25T12:18:04+0100
-# Last modified: 2020-10-25T15:55:04+0100
+# Last modified: 2020-10-25T17:43:57+0100
 """Script to install scripts for the local user."""
 
 import os
@@ -14,12 +14,10 @@ import sysconfig
 
 # What to install
 scripts = ["creoclean"]
-;q
-:q
 
 # Preparation
 scheme = os.name + "_user"
-destdir = sysconfig.get_path('scripts', scheme)
+destdir = sysconfig.get_path("scripts", scheme)
 extensions = (".pyw", ".pyz", ".py")  # Don't change the order!
 install = "install" in [a.lower() for a in sys.argv]
 if os.name not in ("nt", "posix"):
