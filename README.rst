@@ -4,7 +4,7 @@ Cleaning up Creo Parametric versioned files
 :date: 2015-05-10
 :author: Roland Smith
 
-.. Last modified: 2015-05-10 15:17:51 +0200
+.. Last modified: 2020-10-25T15:58:39+0100
 
 
 Introduction
@@ -115,11 +115,16 @@ Requirements
 This script requires Python 3. It has been developed and tested on Python 3.4.
 It has no further dependencies outside of the Python standard library.
 
+General
+-------
+
+Run ``python setup.py install`` to install the program for the current user.
+
+
 Windows
 -------
 
-Copy the file ``creoclean.py`` to the ``Scripts`` subdirectory of your Python
-installation. You can then call it from a ``cmd.exe`` window, if the ``.py``
+After installation, you can then call it from a ``cmd.exe`` window, if the ``.py``
 extension is associated with a filetype, and the filetype has an appropriate
 action defined.  If trying to run ``creoclean.py`` gives an error, try
 executing the following commands in a ``cmd.exe`` window::
@@ -133,7 +138,5 @@ the real path to your ``python.exe``.
 Linux, the BSD variants and OS-X
 --------------------------------
 
-Copy ``creoclean.py`` to any directory in your PATH, and set the permissions
-to executable, e.g. using the ``install`` program::
-
-    install creoclean.py ~/bin/creoclean
+The installation program copies ``creoclean`` to ``~/.local/bin``.
+Make sure that directory is in your ``$PATH``.
