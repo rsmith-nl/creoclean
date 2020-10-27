@@ -4,7 +4,7 @@ Cleaning up Creo Parametric versioned files
 :date: 2015-05-10
 :author: Roland Smith
 
-.. Last modified: 2020-10-25T15:58:39+0100
+.. Last modified: 2020-10-27T18:17:20+0100
 
 
 Introduction
@@ -118,8 +118,15 @@ It has no further dependencies outside of the Python standard library.
 General
 -------
 
-Run ``python setup.py install`` to install the program for the current user.
+To install it for the local user, run::
 
+    python setup.py install
+
+This will install it in the user path for Python scripts.
+For POSIX operating systems this is ususally ``~/.local/bin``.
+For ms-windows this is the ``Scripts`` directory of your Python installation
+or another local directory.
+Make sure that this directory is in your ``$PATH`` environment variable.
 
 Windows
 -------
