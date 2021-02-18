@@ -4,7 +4,7 @@
 #
 # Copyright © 2015 R.F. Smith <rsmith@xs4all.nl>. All rights reserved.
 # Created: 2015-05-07 18:29:17 +0200
-# Last modified: 2020-10-03T14:34:53+0200
+# Last modified: 2021-02-18T11:56:53+0100
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -39,7 +39,7 @@ import os
 import re
 import sys
 
-__version__ = "2020.08.31"
+__version__ = "2021.02.18"
 
 
 def main(argv):
@@ -140,14 +140,18 @@ def clean_miscellaneous(path, dry_run):
     """
     os.chdir(path)
     log = glob.glob("*.log*")
-    logging.info("{} log files found.".format(len(log)))
-    xml = glob.glob("*.xml.*")
-    logging.info("{} xml files found.".format(len(xml)))
+    logging.info(f"{len(log)} log files found.")
+    xml = glob.glob("*log.xml")
+    logging.info(f"{len(xml)} log.xml files found.")
     inf = glob.glob("*.inf.*")
-    logging.info("{} inf files found.".format(len(inf)))
+    logging.info(f"{len(inf)} inf files found.")
     txt = glob.glob("*.txt.*")
-    logging.info("{} txt files found.".format(len(txt)))
-    files = log + xml + inf + txt
+    logging.info(f"{len(txt)} txt files found.")
+    mp = glob.glob("*.m_p")
+    logging.info(f"{len(mp)} m_p files found.")
+    xt = glob.glob("*.x_t")
+    logging.info(f"{len(xt)} x_t files found.")
+    files = log + xml + inf + txt + mp + xt
     for fn in files:
         logging.info("removing '{}'".format(fn))
         if not dry_run:
