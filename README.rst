@@ -4,7 +4,7 @@ Cleaning up Creo Parametric versioned files
 :date: 2015-05-10
 :author: Roland Smith
 
-.. Last modified: 2020-10-27T18:17:20+0100
+.. Last modified: 2022-01-30T18:38:42+0100
 
 
 Introduction
@@ -35,10 +35,9 @@ called ``creoclean``.
 License
 -------
 
-This program is licensed under the `BSD 2-clause`_ license. See the top of
-``creoclean.py`` for the full text.
+This program is licensed under the `MIT`_ license.
 
-.. _BSD 2-clause: http://opensource.org/licenses/BSD-2-Clause
+.. _MIT: http://opensource.org/licenses/MIT
 
 
 Usage
