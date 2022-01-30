@@ -1,30 +1,10 @@
-#!/usr/bin/env python
-# vim:fileencoding=utf-8:ft=python
 # file: creoclean.py
+# vim:fileencoding=utf-8:fdm=marker:ft=python
 #
-# Copyright © 2015 R.F. Smith <rsmith@xs4all.nl>. All rights reserved.
+# Copyright © 2015 R.F. Smith <rsmith@xs4all.nl>
+# SPDX-License-Identifier: MIT
 # Created: 2015-05-07 18:29:17 +0200
-# Last modified: 2021-02-18T11:56:53+0100
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the distribution.
-#
-# THIS SOFTWARE IS PROVIDED BY AUTHOR AND CONTRIBUTORS "AS IS" AND ANY EXPRESS
-# OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-# OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.  IN
-# NO EVENT SHALL AUTHOR OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-# INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
-# OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
-# LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
-# NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
-# EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# Last modified: 2022-01-30T18:33:38+0100
 """
 Cleans up Creo versioned files.
 
@@ -76,9 +56,9 @@ def main(argv):
     if not args.dirs:
         args.dirs = ["."]
     for directory in [d for d in args.dirs if os.path.isdir(d)]:
-        logging.info("cleaning up versioned files in '{}'".format(directory))
+        logging.info(f"cleaning up versioned files in '{directory}'")
         clean_versioned(directory, args.dry_run)
-        logging.info("cleaning up miscellaneous files in '{}'".format(directory))
+        logging.info(f"cleaning up miscellaneous files in '{directory}'")
         clean_miscellaneous(directory, args.dry_run)
 
 
@@ -91,7 +71,7 @@ def clean_versioned(path, dry_run):  # noqa
         dry_run: Boolean to indicate a dry run.
     """
     filenames = [e for e in os.listdir(path) if os.path.isfile(os.path.join(path, e))]
-    logging.info("found {} files".format(len(filenames)))
+    logging.info(f"found {len(filenames)} files")
     splits = [re.split("^(.*)\.([^\.]{3})\.([0-9]+)$", fn) for fn in filenames]
     splits = [s[1:-1] for s in splits if len(s) == 5]
     exts = sorted(set([s[1] for s in splits]))
@@ -100,34 +80,32 @@ def clean_versioned(path, dry_run):  # noqa
         data = [s for s in splits if s[1] == ext]
         cnt = len(data)
         if cnt < 2:
-            logging.info("not enough '{}' files; skipping".format(ext))
+            logging.info(f"not enough '{ext}' files; skipping")
             continue
-        logging.info("found {} '{}' files".format(cnt, ext))
+        logging.info(f"found {cnt} '{ext}' files")
         names = set(p[0] for p in data)
-        logging.info("found {} unique '{}' file names".format(len(names), ext))
+        logging.info(f"found {len(names)} unique '{ext}' file names")
         for nm in names:
             numbers = [int(p[2]) for p in data if p[0] == nm]
             if len(numbers) > 1:
                 numbers.sort()
                 for n in numbers[:-1]:
-                    fn = "{}.{}.{}".format(nm, ext, n)
-                    logging.info("removing '{}'".format(fn))
+                    fn = f"{nm}.{ext}.{n}"
+                    logging.info(f"removing '{fn}'")
                     if not dry_run:
                         try:
                             os.remove(fn)
                         except OSError as e:
-                            es = "removing '{}' failed: {}"
-                            logging.warning(es.format(fn, e))
-            oldfn = "{}.{}.{}".format(nm, ext, numbers[-1])
-            newfn = "{}.{}.{}".format(nm, ext, 1)
+                            logging.warning(f"removing '{fn}' failed: {e}")
+            oldfn = f"{nm}.{ext}.{numbers[-1]}"
+            newfn = f"{nm}.{ext}.{1}"
             if oldfn != newfn:
-                logging.info("renaming '{}' to '{}'".format(oldfn, newfn))
+                logging.info(f"renaming '{oldfn}' to '{newfn}'")
                 if not dry_run:
                     try:
                         os.rename(oldfn, newfn)
                     except OSError as e:
-                        es = "renaming '{}' failed: {}"
-                        logging.warning(es.format(oldfn, e))
+                        logging.warning(f"renaming '{oldfn}' failed: {e}")
 
 
 def clean_miscellaneous(path, dry_run):
@@ -153,13 +131,12 @@ def clean_miscellaneous(path, dry_run):
     logging.info(f"{len(xt)} x_t files found.")
     files = log + xml + inf + txt + mp + xt
     for fn in files:
-        logging.info("removing '{}'".format(fn))
+        logging.info(f"removing '{fn}'")
         if not dry_run:
             try:
                 os.remove(fn)
             except OSError as e:
-                es = "removing '{}' failed: {}"
-                logging.warning(es.format(fn, e))
+                logging.warning(f"removing '{fn}' failed: {e}")
 
 
 if __name__ == "__main__":
