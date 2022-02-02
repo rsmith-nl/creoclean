@@ -1,10 +1,11 @@
+#!/usr/bin/env python
 # file: creoclean.py
 # vim:fileencoding=utf-8:fdm=marker:ft=python
 #
 # Copyright © 2015 R.F. Smith <rsmith@xs4all.nl>
 # SPDX-License-Identifier: MIT
 # Created: 2015-05-07 18:29:17 +0200
-# Last modified: 2022-01-30T18:33:38+0100
+# Last modified: 2022-02-02T13:39:47+0100
 """
 Cleans up Creo versioned files.
 
