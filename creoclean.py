@@ -5,11 +5,11 @@
 # Copyright © 2015 R.F. Smith <rsmith@xs4all.nl>
 # SPDX-License-Identifier: MIT
 # Created: 2015-05-07 18:29:17 +0200
-# Last modified: 2022-02-02T13:39:47+0100
+# Last modified: 2022-02-02T13:47:01+0100
 """
 Cleans up Creo versioned files.
 
-Works in the named diratories or in the current working directory.
+Works in the named directories or in the current working directory.
 Removes all versions except the last one, and renames that to version 1.
 """
 
