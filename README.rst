@@ -1,10 +1,10 @@
 Cleaning up Creo Parametric versioned files
 ###########################################
 
-:date: 2015-05-10
+:date: 2022-02-12
 :author: Roland Smith
 
-.. Last modified: 2022-01-30T18:38:42+0100
+.. Last modified: 2022-02-12T00:13:56+0100
 
 
 Introduction
@@ -21,16 +21,16 @@ end up with lots of versions of the same file.
 .. _git: http://git-scm.com/
 
 So I wrote a script to help clean up this mess. For obvious reasons it is
-called ``creoclean``.
+called ``creoclean``. As of version 2022.02.11, it is a GUI program.
 
 
 .. NOTE::
 
     On ``posix`` platforms like Linux, BSD and OSX, the script is installed
     without an extension. On MS windows platforms, the scripts needs to be
-    installed as ``creoclean.py`` so that it is linked to the Python program
+    installed as ``creoclean.pyw`` so that it is linked to the Python program
     that has to run it. So of you are on the windows platform, please read
-    ``creoclean.py`` whereever you see ``creoclean``.
+    ``creoclean.pyw`` whereever you see ``creoclean``.
 
 License
 -------
@@ -46,64 +46,22 @@ Usage
 .. NOTE::
 
     You should probably *close all open files* in the directory *and* purge
-    them from the Creo session *before* running this script in a directory!
+    them from the Creo session *before* running this script on a directory!
 
-You can use this program basically in two ways::
+Start ``creoclean``, e.g. from a link on your desktop. It will like like as
+shown below.
 
-    creoclean
+.. image:: screenshot.png
+    :alt: screenshot of the GUI
+    :width: 100%
 
-This cleans up the current working directory. Or you can use::
+* Select a directory to clean.
+* Select the required options.
+  - ``dry run`` does everything except the actual removal/renaming.
+  - ``clean miscellaneous`` also cleans log and information files.
+* Press ``Go!`` to start the cleaning process.
+* The text window shows the progress of the cleanup operation.
 
-    creoclean <dir1> <dir2> ...
-
-This cleans up the directories named on the command line.
-
-Options
--------
-
-The ``-h`` option displays the online help.::
-
-    > creoclean -h
-    usage: creoclean [-h] [-d] [-v] [--log {debug,info,warning,error}]
-                    [dir [dir ...]]
-
-    Cleans up Creo versioned files in the named diratories or in the current
-    working directory. Removes all versions except the last one, and renames that
-    to version 1.
-
-    positional arguments:
-    dir                   one or more directories to process
-
-    optional arguments:
-    -h, --help            show this help message and exit
-    -d                    dry run; show what would be done but don't delete
-                            files
-    -v, --version         show program's version number and exit
-    --log {debug,info,warning,error}
-                            logging level (defaults to 'warning')
-
-The ``-d`` option makes the program perform a dry run. This means that all
-actions are listed but not carried out.::
-
-    > creoclean -d ~/tmp/spam-eggs/
-    INFO: DRY RUN, no files will be deleted or renamed
-    INFO: cleaning in '/home/jdoe/tmp/spam-eggs/'
-    INFO: found 21 files
-    INFO: not enough 'asm' files; skipping
-    INFO: found 9 'prt' files
-    INFO: found 2 unique 'prt' file names
-    INFO: removing 'spamshaper.prt.10'
-    INFO: removing 'spamshaper.prt.11'
-    INFO: removing 'spamshaper.prt.12'
-    INFO: renaming 'spamshaper.prt.13' to 'spamshaper.prt.1'
-    INFO: removing 'eggcontainer.prt.5'
-    INFO: removing 'eggcontainer.prt.6'
-    INFO: removing 'eggcontainer.prt.7'
-    INFO: removing 'eggcontainer.prt.8'
-    INFO: renaming 'eggcontainer.prt.9' to 'eggcontainer.prt.1'
-
-You can see the same information during a real run by specifying the
-``--log info`` option.
 
 Installation
 ============

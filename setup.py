@@ -5,7 +5,7 @@
 # Copyright © 2020 R.F. Smith <rsmith@xs4all.nl>
 # SPDX-License-Identifier: MIT
 # Created: 2020-10-25T12:18:04+0100
-# Last modified: 2022-01-23T17:52:46+0100
+# Last modified: 2022-02-12T00:14:12+0100
 """Install scripts for the local user."""
 
 import os
@@ -16,7 +16,7 @@ import sysconfig
 # What to install
 # The inner 2-tuples consist of the name of the script and the extension it
 # should have when installed on an ms-windows machine.
-SCRIPTS = (("creoclean.py", ".py"),)
+SCRIPTS = (("creoclean.pyw", ".pyw"),)
 
 
 def main():
