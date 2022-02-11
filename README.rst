@@ -4,7 +4,7 @@ Cleaning up Creo Parametric versioned files
 :date: 2022-02-12
 :author: Roland Smith
 
-.. Last modified: 2022-02-12T00:13:56+0100
+.. Last modified: 2022-02-12T00:20:14+0100
 
 
 Introduction
@@ -48,7 +48,7 @@ Usage
     You should probably *close all open files* in the directory *and* purge
     them from the Creo session *before* running this script on a directory!
 
-Start ``creoclean``, e.g. from a link on your desktop. It will like like as
+Start ``creoclean``, e.g. from a link on your desktop. It will look like as
 shown below.
 
 .. image:: screenshot.png
@@ -57,8 +57,10 @@ shown below.
 
 * Select a directory to clean.
 * Select the required options.
-  - ``dry run`` does everything except the actual removal/renaming.
-  - ``clean miscellaneous`` also cleans log and information files.
+
+  * ``dry run`` does everything except the actual removal/renaming.
+  * ``clean miscellaneous`` also cleans log and information files.
+
 * Press ``Go!`` to start the cleaning process.
 * The text window shows the progress of the cleanup operation.
 
