@@ -4,7 +4,7 @@ Cleaning up Creo Parametric versioned files
 :date: 2022-02-12
 :author: Roland Smith
 
-.. Last modified: 2022-02-12T00:20:14+0100
+.. Last modified: 2022-02-12T00:21:44+0100
 
 
 Introduction
@@ -61,7 +61,8 @@ shown below.
   * ``dry run`` does everything except the actual removal/renaming.
   * ``clean miscellaneous`` also cleans log and information files.
 
-* Press ``Go!`` to start the cleaning process.
+* Press ``Go!`` to start the cleaning process. This button will only be
+  enabled after a directory is selected.
 * The text window shows the progress of the cleanup operation.
 
 
