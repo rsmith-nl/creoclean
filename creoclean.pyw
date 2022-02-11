@@ -5,7 +5,7 @@
 # Copyright © 2022 R.F. Smith <rsmith@xs4all.nl>
 # SPDX-License-Identifier: MIT
 # Created: 2022-02-11T19:27:02+0100
-# Last modified: 2022-02-11T23:15:45+0100
+# Last modified: 2022-02-11T23:58:03+0100
 
 from tkinter import filedialog
 from tkinter import ttk
@@ -43,20 +43,18 @@ def create_widgets(root, w):
     ttk.Label(root, text="(1)").grid(row=0, column=0, sticky="ew")
     w.fb = ttk.Button(root, text="Select directory", command=do_directory)
     w.fb.grid(row=0, column=1, columnspan=2, sticky="w")
-    w.dn = ttk.Label(root)
+    w.dn = ttk.Label(root, text="(Not selected)")
     w.dn.grid(row=0, column=3, columnspan=2, sticky="ew")
     # Second row
     ttk.Label(root, text="(2)").grid(row=1, column=0, sticky="ew")
+    fr = tk.Frame()
+    fr.grid(row=1, column=1, columnspan=3, sticky="ew")
     w.dry = tk.IntVar()
     w.dry.set(0)
-    ttk.Checkbutton(root, text="dry run", variable=w.dry).grid(
-        row=1, column=1, sticky="ew"
-    )
+    ttk.Checkbutton(fr, text="dry run", variable=w.dry).pack(side="left")
     w.extra = tk.IntVar()
     w.extra.set(1)
-    ttk.Checkbutton(root, text="clean miscellaneous", variable=w.extra).grid(
-        row=1, column=2, sticky="ew"
-    )
+    ttk.Checkbutton(fr, text="clean miscellaneous", variable=w.extra).pack(side="left")
     # Third row
     ttk.Label(root, text="(3)").grid(row=2, column=0, sticky="ew")
     w.gobtn = ttk.Button(root, text="Go!", command=do_start, state=tk.DISABLED)
@@ -86,7 +84,7 @@ def do_directory():
     """Callback to open a directory"""
     dn = filedialog.askdirectory(title="Directory to clean", parent=root)
     widgets.dn["text"] = dn
-    widgets.gobtn['state'] = 'enabled'
+    widgets.gobtn["state"] = "enabled"
     widgets.status.delete(0, tk.END)
 
 
