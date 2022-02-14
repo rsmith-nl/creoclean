@@ -4,7 +4,7 @@ Cleaning up Creo Parametric versioned files
 :date: 2022-02-12
 :author: Roland Smith
 
-.. Last modified: 2022-02-12T00:42:33+0100
+.. Last modified: 2022-02-14T22:21:17+0100
 
 
 Introduction
@@ -38,10 +38,10 @@ This program is licensed under the `MIT`_ license.
 Usage
 =====
 
-.. NOTE::
+.. Warning::
 
-    You should probably *close all open files* in the directory *and* purge
-    them from the Creo session *before* running this script on a directory!
+    You should *close all open Creo files* in the directory and *erase
+    them from the Creo session* **before** running this script on a directory!
 
 Start ``creoclean``, e.g. from a link on your desktop. It will look like as
 shown below.
